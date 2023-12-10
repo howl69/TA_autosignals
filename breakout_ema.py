@@ -7,6 +7,7 @@ import datetime as dt
 from telegram import Bot
 from config import TICKERS, ema_n_days
 from vars import CHANNEL_ID, bot_token, HOST
+from plotter import ema_sig_plot_send
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -104,10 +105,10 @@ def new_data_processing(ticker_df, ticker, ema_n_days = 200):
     cur_ticker_cfg[ticker] = cur_cfg
 
     if not np.isnan(cur_cfg['breaking_up_signal']):
-        bot.send_message(CHANNEL_ID, f"{ticker} - breaking_up_signal")
+        ema_sig_plot_send(ticker_df, ticker, 'breakout_up')
         logger.info(f"{ticker} - breaking_up_signal")
     elif not np.isnan(cur_cfg['breaking_down_signal']):
-        bot.send_message(CHANNEL_ID, f"{ticker} - breaking_down_signal")
+        ema_sig_plot_send(ticker_df, ticker, 'breakout_down')
         logger.info(f"{ticker} - breaking_down_signal")
 
 def main_process(ema_n_days = 200):

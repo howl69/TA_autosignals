@@ -3,7 +3,7 @@ import numpy as np
 from telegram import Bot
 import datetime as dt
 import pandas as pd
-from config import CHANNEL_ID, bot_token
+from vars import CHANNEL_ID, bot_token
 
 bot = Bot(bot_token)
 
